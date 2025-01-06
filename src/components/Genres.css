@@ -1,0 +1,41 @@
+.genre-container {
+  max-width: 300px;
+  padding: 20px;
+  position: fixed;
+  left: 0px;
+  top: 70px;
+  font-family: "Rubik";
+}
+
+.genre-container h2 {
+  font-size: 24px;
+  font-weight: bold;
+  color: #d8d7d7;
+  text-align: left;
+}
+
+.genre-container ol {
+  list-style-type: none;
+  padding: 0;
+  margin-top: 10px;
+}
+
+.genre-container li {
+  padding: 10px 15px;
+  font-size: 18px;
+  color: #d8d7d7;
+  cursor: pointer;
+  border-bottom: 1px rgb(20, 14, 14);
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.genre-container li:hover {
+  background-color: rgb(61, 43, 43);
+  transform: scale(1.05);
+}
+
+.genre-container li:focus {
+  outline: none;
+  background-color: #e0e0e0;
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.2);
+}

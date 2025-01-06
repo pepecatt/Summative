@@ -1,0 +1,95 @@
+/* Basic style for the cart view */
+.cart-view {
+	position: absolute;
+	position: fixed;
+	top: 60px;
+	right: 0;
+	height: 93%;
+	width: 300px;
+	background-color: rgba(72, 53, 53, 0.8);
+	color: white;
+	padding: 20px;
+	border-style: solid;
+  border-color: black;
+  border-width: 2px;
+  border-radius: 10px;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	z-index: 100;
+}
+
+/* Header inside the cart */
+.cart-view h1 {
+	text-align: center;
+	margin-top: 5px;
+	font-size: 1.5em;
+	color: #fff;
+}
+
+/* Styling for the cart items list */
+.cart-items {
+	flex-grow: 1;
+	overflow-y: auto;
+	padding: 10px 0;
+}
+
+/* Style for each cart item */
+.cart-item {
+	display: flex;
+	align-items: center;
+	margin-bottom: 20px;
+	padding: 10px;
+	background-color: #a48b8b;
+	border-radius: 5px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.poster {
+	max-width: 60px;
+	max-height: 100px;
+	margin-right: 15px;
+	border-radius: 5px;
+}
+
+.cart-item p {
+  width: 200px;
+	font-size: 1em;
+	color: black;
+	margin: 0;
+}
+
+.cart-item button {
+	background-color: #a48b8b;
+	color: white;
+	padding: 2px;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	transition: background-color 0.2s;
+	right: 27px;
+}
+
+.cart-item button:hover {
+    background-color: #8d7777;
+}
+
+.trashCan img {
+	width: 30px;
+}
+
+/* Optional: Close button (for hiding the cart view) 
+  .cart-view .close-btn {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background-color: transparent;
+    border: none;
+    font-size: 1.5em;
+    color: white;
+    cursor: pointer;
+  }
+  
+  .cart-view .close-btn:hover {
+    color: #ff4444; /* Change color on hover
+  } */

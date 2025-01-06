@@ -1,0 +1,56 @@
+:root {
+  --spotlight-radius: 800px;
+}
+
+* {
+  margin: 0px;
+  gap: 0;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+.spotlight {
+  width: var(--spotlight-radius);
+  height: var(--spotlight-radius);
+  position: absolute;
+  top: -45px;
+  right: -145px;
+  opacity: 50%;
+  background-image: radial-gradient(circle,
+      rgb(148, 141, 141), rgb(27, 18, 18), rgb(27, 18, 18));
+}
+
+.movies {
+  position: absolute;
+  top: 60px;
+  right: 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.movierow1,
+.movierow2 {
+  display: flex;
+  flex: 1;
+}
+
+.movie {
+  width: 105px;
+  height: 150px;
+  border: 1px;
+  border-style: solid;
+  border-radius: 5px;
+  border-color: rgb(110, 108, 108);
+  margin-left: 15px;
+}
+
+.popcornbag {
+  position: absolute;
+  top: 470px;
+  right: 0px;
+  width: 520px;
+  height: 630px;
+}

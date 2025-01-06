@@ -1,0 +1,96 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+.background {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background-repeat: no-repeat;
+}
+
+.header-container {
+    position: fixed;
+    width: 100%;
+    top: 0;
+		z-index: 100;
+}
+
+.Popflix {
+	color: rgb(124, 113, 113);
+	text-shadow: 1px 1px 3px rgb(78, 50, 50);
+	position: absolute;
+	font-family: "Poppins", sans-serif;
+	font-weight: 800;
+	font-style: normal;
+	font-size: 35px;
+	left: 10px;
+	top: 5px;
+	opacity: 100%;
+	letter-spacing: 1px;
+}
+
+.header-container button {
+	font-family: "Rubik";
+	background-color: white;
+	border-width: 1px;
+	border-radius: 3px;
+	
+	height: 40px;
+	cursor: pointer;
+    position: absolute;
+    top: 12px;
+
+	color: red;
+	font-size: 17px;
+
+	transition: background-color 0.3s, color 0.1s;
+}
+
+.signIn,
+.logout {
+	border-color: red;
+	border-style: solid;
+
+	width: 100px;
+	top: 10px;
+	right: 20px;
+}
+
+.signIn:hover,
+.logout:hover {
+	background-color: rgb(233, 11, 11);
+	color: white;
+}
+
+.cart {
+	top: 10px;
+	right: 130px;
+	width: 60px;
+}
+
+.cart img {
+	width: 30px;
+	margin-top: 3px;
+	margin-right: 5px;
+}
+
+.cart:hover {
+	border-color: rgb(233, 11, 11);
+	border-style: solid;
+}
+
+.settings {
+	top: 10px;
+	right: 200px;
+	width: 50px;
+}
+
+.settings img {
+	width: 40px;
+	margin-top: -1px;
+}
+
+.settings:hover {
+	border-color: rgb(194, 152, 152);
+	border-style: solid;
+}

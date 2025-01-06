@@ -1,0 +1,79 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,200..800;1,200..800&display=swap');
+
+* {
+  margin: 0px;
+}
+
+.login-container {
+  background-color: rgb(27, 18, 18);
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.googleLogin {
+  position: absolute;
+  left: 50%;
+  top: 430px;
+  -ms-transform: translate(-50%);
+  transform: translate(-50%);
+  width: 320px;
+}
+
+form {
+  background-color: rgb(0 0 0 / 40%);
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0 0 0 / 30%);
+  width: 320px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 50%;
+  padding-bottom: 90px;
+}
+
+.login-container label {
+  font-family: "Karla";
+  font-size: 30px;
+  font-weight: 500;
+  margin-bottom: 5px;
+  color: #f0f0f0;
+  letter-spacing: 1px;
+}
+
+input {
+  padding: 15px;
+  border: 1px solid #555;
+  border-radius: 5px;
+  background-color: #444;
+  color: white;
+  font-family: arial;
+  font-size: 16px;
+}
+
+input:focus {
+  outline: none;
+  border-color: rgb(187, 11, 20);
+}
+
+.login-container button {
+  padding: 12px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+form button {
+  background-color: rgb(218, 4, 4);
+  color: white;
+}
+
+form button:hover {
+  background-color: rgb(187, 11, 20);
+}

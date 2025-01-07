@@ -2,11 +2,12 @@ import { useNavigate } from "react-router-dom";
 import { useRef } from "react";
 import { useStoreContext } from '../context';
 import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
-import { auth } from '../firebase';
+import { auth, firestore } from '../firebase';
+import { doc, setDoc } from "firebase/firestore";
 import './LoginView.css';
 
 function LoginView() {
-	const { setUser } = useStoreContext();
+	const { setUser, user } = useStoreContext();
 	const enteredEmail = useRef('');
 	const enteredPassword = useRef('');
 	const navigate = useNavigate();
@@ -21,6 +22,7 @@ function LoginView() {
       console.log("Error logging in:", error.message);
       alert("Error signing in!");
     }
+		//readGenres(); //!!
   }
 
   async function googleLogin() {
@@ -33,6 +35,12 @@ function LoginView() {
     }
   }
   
+	async function readGenres() {
+		const docRef = doc(firestore, "users", user.uid);
+  	const data = (await getDoc(docRef)).data();
+  	const cart = Map(data);
+		console.log(cart);
+	}
 
 	return (
 		<div className="login-container">

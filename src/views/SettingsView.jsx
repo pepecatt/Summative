@@ -9,7 +9,6 @@ function SettingsView() {
     email, setCurrentGenre,
     genreList, setGenreList,
   } = useStoreContext();
-  console.log("inital", genreList);
 
   const [changeFirstName, setChangeFirst] = useState(false);
   const [changeLastName, setChangeLast] = useState(false);

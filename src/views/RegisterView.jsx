@@ -2,12 +2,13 @@ import { useNavigate } from "react-router-dom";
 import { useRef } from "react";
 import { useStoreContext } from '../context';
 import { createUserWithEmailAndPassword, updateProfile, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
-import { auth } from '../firebase';
+import { auth, firestore } from '../firebase';
+import { doc, setDoc } from "firebase/firestore";
 import "./RegisterView.css";
 
 function RegisterView() {
   const { setUser, setFirstName,
-    setGenreList, setCurrentGenre } = useStoreContext();
+    setGenreList, setCurrentGenre, user } = useStoreContext();
 
   const firstName = useRef('');
   const lastName = useRef('');
@@ -54,9 +55,9 @@ function RegisterView() {
     }
       
     try {
-      const user = (await createUserWithEmailAndPassword(auth, email.current.value, password.current.value)).user;
-      await updateProfile(user, { displayName: `${firstName.current.value} ${lastName.current.value}` });
-      setUser(user);
+      const userr = (await createUserWithEmailAndPassword(auth, email.current.value, password.current.value)).user;
+      await updateProfile(userr, { displayName: `${firstName.current.value} ${lastName.current.value}` });
+      setUser(userr);
     } catch (error) {
       console.error("Error creating user:", error.message);
       alert("Error creating user with email and password!");
@@ -86,7 +87,7 @@ function RegisterView() {
     sortGenres(selectedGenres);
   }
 
-  function sortGenres(selectedGenres) {
+  async function sortGenres(selectedGenres) {
     const sortedGenres = selectedGenres
       .map((genreId) => genres.find((genre) => genre.id === genreId))
       .sort((a, b) => a.genre.localeCompare(b.genre)); // sort by genre name alphabetically
@@ -94,6 +95,15 @@ function RegisterView() {
     setGenreList([...sortedGenres]);
     setCurrentGenre(sortedGenres[0].genre);
     navigateUser(sortedGenres);
+
+    const docRef = doc(firestore, "users", user.uid);
+    await setDoc(docRef, { sortedGenres });
+
+    const docSnap = await getDoc(docRef);
+    const data = docSnap.data();
+    const sddsd = data.sortedGenres;
+
+    console.log("Fetched sortedGenres:", sddsd);
   }
 
   function navigateUser(sortedGenres) {

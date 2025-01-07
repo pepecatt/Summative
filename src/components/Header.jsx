@@ -7,6 +7,9 @@ import './Header.css';
 import cartImage from "../assets/cart.png";
 import settingsImage from "../assets/settings.png";
 
+import { firestore } from "../firebase"; //
+import { doc, setDoc, getDoc } from "firebase/firestore"; //
+
 function Header() {
   const {
     cartOpen, setCartOpen,
@@ -25,12 +28,20 @@ function Header() {
     navigate(`/`, { replace: true });
   }
 
-  function cart() {
+  async function cart() {
     if (cartOpen) {
       setCartOpen(false);
     } else {
       setCartOpen(true);
     }
+
+    //
+    const genres = ["action", "adventure"];
+    const docRef = doc(firestore, "users", user.uid);
+    await setDoc(docRef, { genres });
+    const docSnap = await getDoc(docRef);
+    const data = docSnap.data();
+    console.log(data);
   }
 
   function settings() {

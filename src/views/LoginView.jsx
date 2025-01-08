@@ -3,11 +3,11 @@ import { useRef } from "react";
 import { useStoreContext } from '../context';
 import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 import { auth, firestore } from '../firebase';
-import { doc, setDoc } from "firebase/firestore";
+import { doc, getDoc } from "firebase/firestore";
 import './LoginView.css';
 
 function LoginView() {
-	const { setUser, user } = useStoreContext();
+	const { setUser, setGenreList } = useStoreContext();
 	const enteredEmail = useRef('');
 	const enteredPassword = useRef('');
 	const navigate = useNavigate();
@@ -18,11 +18,13 @@ function LoginView() {
       const user = (await signInWithEmailAndPassword(auth, enteredEmail.current.value, enteredPassword.current.value)).user;
       setUser(user);
       navigate(`/movies`);
+			if (user) {
+				readGenres(user);  // Only call readGenres if user is valid
+			}
     } catch (error) {
       console.log("Error logging in:", error.message);
       alert("Error signing in!");
     }
-		//readGenres(); //!!
   }
 
   async function googleLogin() {
@@ -30,16 +32,26 @@ function LoginView() {
       const user = (await signInWithPopup(auth, new GoogleAuthProvider())).user;
       setUser(user);
       navigate(`/movies`);
+			if (user) {
+				readGenres(user);  // Only call readGenres if user is valid
+			}
     } catch (error) {
       alert("Error signing in!");
     }
   }
   
-	async function readGenres() {
+	async function readGenres(user) {
 		const docRef = doc(firestore, "users", user.uid);
   	const data = (await getDoc(docRef)).data();
-  	const cart = Map(data);
-		console.log(cart);
+  	const genres = data.sortedGenres;
+		console.log(genres);
+		setGenreList(genres);
+
+		// const docSnap = await getDoc(docRef);
+    // const data = docSnap.data();
+    // const sddsd = data.sortedGenres;
+    
+    // console.log("Fetched sortedGenres:", sddsd);
 	}
 
 	return (

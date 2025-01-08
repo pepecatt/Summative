@@ -3,12 +3,12 @@ import { useRef } from "react";
 import { useStoreContext } from '../context';
 import { createUserWithEmailAndPassword, updateProfile, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 import { auth, firestore } from '../firebase';
-import { doc, setDoc } from "firebase/firestore";
+import { doc, setDoc, getDoc } from "firebase/firestore";
 import "./RegisterView.css";
 
 function RegisterView() {
   const { setUser, setFirstName,
-    setGenreList, setCurrentGenre, user } = useStoreContext();
+    setGenreList, setCurrentGenre } = useStoreContext();
 
   const firstName = useRef('');
   const lastName = useRef('');
@@ -55,17 +55,17 @@ function RegisterView() {
     }
       
     try {
-      const userr = (await createUserWithEmailAndPassword(auth, email.current.value, password.current.value)).user;
-      await updateProfile(userr, { displayName: `${firstName.current.value} ${lastName.current.value}` });
-      setUser(userr);
+      const user = (await createUserWithEmailAndPassword(auth, email.current.value, password.current.value)).user;
+      await updateProfile(user, { displayName: `${firstName.current.value} ${lastName.current.value}` });
+      setUser(user);
+      if (user) {
+        sortGenres(selectedGenres, user);
+      }
     } catch (error) {
       console.error("Error creating user:", error.message);
       alert("Error creating user with email and password!");
       return;
     }
-
-    setFirstName(firstName.current.value);
-    sortGenres(selectedGenres);
   };
 
   const googleRegister = async () => {
@@ -80,14 +80,16 @@ function RegisterView() {
     try {
       const user = (await signInWithPopup(auth, new GoogleAuthProvider())).user;
       setUser(user);
-      setFirstName(user.email);
+      setFirstName(user.email); //dsoigfpads
+      if (user) {
+        sortGenres(selectedGenres, user);
+      }
     } catch {
       alert("Error creating user with email and password!");
     }
-    sortGenres(selectedGenres);
   }
 
-  async function sortGenres(selectedGenres) {
+  async function sortGenres(selectedGenres, usera) {
     const sortedGenres = selectedGenres
       .map((genreId) => genres.find((genre) => genre.id === genreId))
       .sort((a, b) => a.genre.localeCompare(b.genre)); // sort by genre name alphabetically
@@ -96,14 +98,12 @@ function RegisterView() {
     setCurrentGenre(sortedGenres[0].genre);
     navigateUser(sortedGenres);
 
-    const docRef = doc(firestore, "users", user.uid);
+    const docRef = doc(firestore, "users", usera.uid);
     await setDoc(docRef, { sortedGenres });
 
-    const docSnap = await getDoc(docRef);
-    const data = docSnap.data();
-    const sddsd = data.sortedGenres;
-
-    console.log("Fetched sortedGenres:", sddsd);
+    const docaa = doc(firestore, "users", usera.uid);
+    const data = (await getDoc(docaa)).data();
+    console.log(data.sortedGenres);
   }
 
   function navigateUser(sortedGenres) {

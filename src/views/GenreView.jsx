@@ -15,7 +15,7 @@ function GenresView() {
   const [totalPages, setTotalPages] = useState(1);
   const navigate = useNavigate();
 
-  if (genreList.length < 1) {
+  if (!genreList || genreList.length < 1) {
     return <div>Loading...</div>;
   }
   const [previousId, setPreviousId] = useState(genreList[0].id);

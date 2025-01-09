@@ -7,7 +7,10 @@ import { doc, getDoc } from "firebase/firestore";
 import './LoginView.css';
 
 function LoginView() {
-	const { setUser, setGenreList } = useStoreContext();
+	const { setUser, 
+		setGenreList, setCurrentGenre, 
+		setFirstName, setLastName, setEmail } 
+		= useStoreContext();
 	const enteredEmail = useRef('');
 	const enteredPassword = useRef('');
 	const navigate = useNavigate();
@@ -17,12 +20,12 @@ function LoginView() {
     try {
       const user = (await signInWithEmailAndPassword(auth, enteredEmail.current.value, enteredPassword.current.value)).user;
       setUser(user);
-      navigate(`/movies`);
 			if (user) {
-				readGenres(user);  // Only call readGenres if user is valid
+				readGenres(user);
+				setFirstName(user.displayName.split(' ')[0]);
+				setLastName(user.displayName.split(' ')[1]);
 			}
     } catch (error) {
-      console.log("Error logging in:", error.message);
       alert("Error signing in!");
     }
   }
@@ -31,9 +34,9 @@ function LoginView() {
     try {
       const user = (await signInWithPopup(auth, new GoogleAuthProvider())).user;
       setUser(user);
-      navigate(`/movies`);
 			if (user) {
-				readGenres(user);  // Only call readGenres if user is valid
+				readGenres(user);
+				setFirstName(user.email);
 			}
     } catch (error) {
       alert("Error signing in!");
@@ -46,12 +49,9 @@ function LoginView() {
   	const genres = data.sortedGenres;
 		console.log(genres);
 		setGenreList(genres);
-
-		// const docSnap = await getDoc(docRef);
-    // const data = docSnap.data();
-    // const sddsd = data.sortedGenres;
-    
-    // console.log("Fetched sortedGenres:", sddsd);
+		navigate(`/movies/genre/${genres[0].id}`);
+		setCurrentGenre(genres[0].genre);
+		setEmail(user.email);
 	}
 
 	return (

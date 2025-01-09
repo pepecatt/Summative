@@ -19,7 +19,6 @@ export const StoreProvider = ({ children }) => {
   const [cart, setCart] = useState([]);
   const [cartOpen, setCartOpen] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
-  const [genres, setGenres] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -30,6 +29,8 @@ export const StoreProvider = ({ children }) => {
         if (sessionCart) {
           setCart(Map(JSON.parse(sessionCart)));
         }
+      } else {
+        //setUser(null);
       }
       setLoading(false);
     });
@@ -54,7 +55,6 @@ export const StoreProvider = ({ children }) => {
       cart, setCart,
       cartOpen, setCartOpen,
       settingsOpen, setSettingsOpen,
-      genres, setGenres,
       loading, setLoading
     }}>
       {children}

@@ -62,7 +62,6 @@ function RegisterView() {
         sortGenres(selectedGenres, user);
       }
     } catch (error) {
-      console.error("Error creating user:", error.message);
       alert("Error creating user with email and password!");
       return;
     }
@@ -100,10 +99,6 @@ function RegisterView() {
 
     const docRef = doc(firestore, "users", usera.uid);
     await setDoc(docRef, { sortedGenres });
-
-    const docaa = doc(firestore, "users", usera.uid);
-    const data = (await getDoc(docaa)).data();
-    console.log(data.sortedGenres);
   }
 
   function navigateUser(sortedGenres) {

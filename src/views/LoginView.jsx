@@ -9,7 +9,7 @@ import './LoginView.css';
 function LoginView() {
 	const { setUser, 
 		setGenreList, setCurrentGenre, 
-		setFirstName, setLastName, setEmail } 
+		setLastName, user } 
 		= useStoreContext();
 	const enteredEmail = useRef('');
 	const enteredPassword = useRef('');
@@ -36,7 +36,6 @@ function LoginView() {
       setUser(user);
 			if (user) {
 				readGenres(user);
-				setFirstName(user.email);
 			}
     } catch (error) {
       alert("Error signing in!");
@@ -51,7 +50,6 @@ function LoginView() {
 		setGenreList(genres);
 		navigate(`/movies/genre/${genres[0].id}`);
 		setCurrentGenre(genres[0].genre);
-		setEmail(user.email);
 	}
 
 	return (

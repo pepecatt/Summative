@@ -7,8 +7,6 @@ const StoreContext = createContext();
 
 export const StoreProvider = ({ children }) => {
   // email user
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   // firebase user
@@ -45,8 +43,6 @@ export const StoreProvider = ({ children }) => {
 
   return (
     <StoreContext.Provider value={{
-      email, setEmail,
-      password, setPassword,
       user, setUser,
       firstName, setFirstName,
       lastName, setLastName,

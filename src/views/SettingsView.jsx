@@ -6,8 +6,8 @@ function SettingsView() {
   const {
     firstName, setFirstName,
     lastName, setLastName,
-    email, setCurrentGenre,
-    genreList, setGenreList,
+    setCurrentGenre,
+    genreList, setGenreList, user
   } = useStoreContext();
 
   const [changeFirstName, setChangeFirst] = useState(false);
@@ -86,53 +86,83 @@ function SettingsView() {
   return (
     <>
       <div className="settings-container">
-        <form onSubmit={settings}>
-          <label className="settingsLabel">Settings</label>
-          <label className="userEmail">Email: {email}</label>
-          <div className="userInfoDiv">
-            <label className="userInfo">First Name: {firstName}</label>
-            <button className='changeButton' type="button" onClick={firstNameChange}>Change</button>
-          </div>
-          {changeFirstName && (
-            <input
-              type="text"
-              placeholder="New First Name"
-              ref={newFirstName}
-            />
-          )}
-          <div className="userInfoDiv">
-            <label className="userInfo">Last Name: {lastName}</label>
-            <button className='changeButton' type="button" onClick={lastNameChange}>Change</button>
-          </div>
-          {changeLastName && (
-            <input
-              type="text"
-              placeholder="New Last Name"
-              ref={newLastName}
-            />
-          )}
+        <label className="settingsLabel">Settings</label>
 
-          <label className="genreLabel">Genres:</label>
-          {checkedGenres && (
-            <div className="genresList">
-            {genres.map((item) => {
-              return (
-                <label key={item.id}>
-                  <input
-                    type='checkbox'
-                    id="check"
-                    checked={checkedGenres[item.id] || false}
-                    ref={(el) => (checkboxesRef.current[item.id] = el)}
-                    onChange={() => handleChange(item.id)}
-                  /> {item.genre}
-                </label>
-              );
-            })}
-          </div>
-          )}
-          
-          <button className="submit" type="submit" onChange={settings}>Submit Changes</button>
-        </form>
+        {user.emailVerified ? (
+          <form onSubmit={settings}>
+            <label className="userEmail">Email: {user.email}</label>
+
+            <label className="genreLabel">Genres:</label>
+            {checkedGenres && (
+              <div className="genresList">
+                {genres.map((item) => {
+                  return (
+                    <label key={item.id}>
+                      <input
+                        type='checkbox'
+                        id="check"
+                        checked={checkedGenres[item.id] || false}
+                        ref={(el) => (checkboxesRef.current[item.id] = el)}
+                        onChange={() => handleChange(item.id)}
+                      /> {item.genre}
+                    </label>
+                  );
+                })}
+              </div>
+            )}
+
+            <button className="submit" type="submit" onChange={settings}>Submit Changes</button>
+          </form>
+        ) : (
+          <form onSubmit={settings}>
+            <label className="userEmail">Email: {user.email}</label>
+            <div className="userInfoDiv">
+              <label className="userInfo">First Name: {firstName}</label>
+              <button className='changeButton' type="button" onClick={firstNameChange}>Change</button>
+            </div>
+            {changeFirstName && (
+              <input
+                type="text"
+                placeholder="New First Name"
+                ref={newFirstName}
+              />
+            )}
+            <div className="userInfoDiv">
+              <label className="userInfo">Last Name: {lastName}</label>
+              <button className='changeButton' type="button" onClick={lastNameChange}>Change</button>
+            </div>
+            {changeLastName && (
+              <input
+                type="text"
+                placeholder="New Last Name"
+                ref={newLastName}
+              />
+            )}
+
+            <label className="genreLabel">Genres:</label>
+            {checkedGenres && (
+              <div className="genresList">
+                {genres.map((item) => {
+                  return (
+                    <label key={item.id}>
+                      <input
+                        type='checkbox'
+                        id="check"
+                        checked={checkedGenres[item.id] || false}
+                        ref={(el) => (checkboxesRef.current[item.id] = el)}
+                        onChange={() => handleChange(item.id)}
+                      /> {item.genre}
+                    </label>
+                  );
+                })}
+              </div>
+            )}
+
+            <button className="submit" type="submit" onChange={settings}>Submit Changes</button>
+          </form>
+        )
+        }
+
       </div>
     </>
 

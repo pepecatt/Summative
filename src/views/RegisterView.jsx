@@ -3,7 +3,7 @@ import { useRef } from "react";
 import { useStoreContext } from '../context';
 import { createUserWithEmailAndPassword, updateProfile, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 import { auth, firestore } from '../firebase';
-import { doc, setDoc, getDoc } from "firebase/firestore";
+import { doc, setDoc } from "firebase/firestore";
 import "./RegisterView.css";
 
 function RegisterView() {

@@ -9,7 +9,7 @@ import './LoginView.css';
 function LoginView() {
 	const { setUser, 
 		setGenreList, setCurrentGenre, 
-		setLastName, user } 
+		 user } 
 		= useStoreContext();
 	const enteredEmail = useRef('');
 	const enteredPassword = useRef('');
@@ -22,8 +22,6 @@ function LoginView() {
       setUser(user);
 			if (user) {
 				readGenres(user);
-				setFirstName(user.displayName.split(' ')[0]);
-				setLastName(user.displayName.split(' ')[1]);
 			}
     } catch (error) {
       alert("Error signing in!");

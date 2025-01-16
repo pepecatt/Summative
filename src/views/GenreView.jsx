@@ -6,14 +6,15 @@ import "./GenreView.css";
 
 function GenresView() {
   const { genreList, currentGenre,
-    setCartOpen, firstName,
-    cart, setCart
+    setCartOpen, 
+    cart, setCart, user
   } = useStoreContext();
   const [movies, setMovies] = useState([]);
   const { id } = useParams();
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const navigate = useNavigate();
+  const firstName = user.displayName.split(' ')[0];
 
   if (!genreList || genreList.length < 1) {
     return <div>Loading...</div>;

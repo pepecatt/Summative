@@ -6,9 +6,6 @@ import { Map } from 'immutable';
 const StoreContext = createContext();
 
 export const StoreProvider = ({ children }) => {
-  // email user
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
   // firebase user
   const [user, setUser] = useState(null);
 
@@ -44,8 +41,6 @@ export const StoreProvider = ({ children }) => {
   return (
     <StoreContext.Provider value={{
       user, setUser,
-      firstName, setFirstName,
-      lastName, setLastName,
       genreList, setGenreList,
       currentGenre, setCurrentGenre,
       cart, setCart,

@@ -1,18 +1,19 @@
 import { useRef, useState } from "react";
 import { useStoreContext } from "../context";
+import { updateProfile } from 'firebase/auth';
 import "./SettingsView.css";
 
 function SettingsView() {
   const {
-    firstName, setFirstName,
-    lastName, setLastName,
-    setCurrentGenre,
-    genreList, setGenreList, user
+    user, setCurrentGenre,
+    genreList, setGenreList
   } = useStoreContext();
 
+  const firstName = user.displayName.split(' ')[0];
   const [changeFirstName, setChangeFirst] = useState(false);
-  const [changeLastName, setChangeLast] = useState(false);
   const newFirstName = useRef();
+  const lastName = user.displayName.split(' ')[1];
+  const [changeLastName, setChangeLast] = useState(false);
   const newLastName = useRef();
 
   const genres = [
@@ -46,7 +47,6 @@ function SettingsView() {
       [itemId]: !prevState[itemId], // Toggle checkbox
     }));
   };
-  console.log(checkedGenres);
 
   const checkboxesRef = useRef({});
 
@@ -57,9 +57,10 @@ function SettingsView() {
       .filter((genreId) => checkboxesRef.current[genreId].checked)
       .map(Number);
 
-    if (selectedGenres.length >= 1 && selectedGenres.length < 4) {  // ** change to 10
+    if (selectedGenres.length >= 1 && selectedGenres.length < 3) {  // ** change to 10
       alert("You need to select at least 10 genres!");
-    } else if (selectedGenres.length >= 4) {  // ** change to 10
+      return;
+    } else if (selectedGenres.length >= 3) {  // ** change to 10
       const sortedGenres = selectedGenres
         .map((genreId) => genres.find((genre) => genre.id === genreId))
         .sort((a, b) => a.genre.localeCompare(b.genre));
@@ -72,12 +73,33 @@ function SettingsView() {
   }
 
   function setInformation() {
-    if (newFirstName !== null) {
-      setFirstName(newFirstName.current.value);
-    }
-    if (newLastName !== null) {
-      setLastName(newLastName.current.value);
-    }
+    if (newFirstName.current && newFirstName.current.value) {
+      if (newLastName.current && newLastName.current.value) {
+          updateProfile(user, {
+              displayName: newFirstName.current.value + " " + newLastName.current.value
+          }).then(() => {
+              console.log("new first and last:", user.displayName);
+          }).catch(() => {
+              console.error("error setting display name");
+          });
+      } else {
+          updateProfile(user, {
+              displayName: newFirstName.current.value + " " + user.displayName.split(' ')[1]
+          }).then(() => {
+              console.log("new first:", user.displayName);
+          }).catch(() => {
+              console.error("error setting display name");
+          });
+      }
+  } else if (newLastName.current && newLastName.current.value) {
+      updateProfile(user, {
+          displayName: user.displayName.split(' ')[0] + " " + newLastName.current.value
+      }).then(() => {
+          console.log("new last:", user.displayName);
+      }).catch(() => {
+          console.error("error setting display name");
+      });
+  }
   }
 
   const firstNameChange = () => setChangeFirst(!changeFirstName);

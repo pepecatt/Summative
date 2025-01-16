@@ -7,7 +7,7 @@ import { doc, setDoc } from "firebase/firestore";
 import "./RegisterView.css";
 
 function RegisterView() {
-  const { setUser, setFirstName,
+  const { setUser,
     setGenreList, setCurrentGenre } = useStoreContext();
 
   const firstName = useRef('');
@@ -79,7 +79,6 @@ function RegisterView() {
     try {
       const user = (await signInWithPopup(auth, new GoogleAuthProvider())).user;
       setUser(user);
-      setFirstName(user.email); //dsoigfpads
       if (user) {
         sortGenres(selectedGenres, user);
       }

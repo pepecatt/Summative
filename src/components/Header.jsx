@@ -2,7 +2,8 @@ import { useNavigate } from 'react-router-dom';
 import { useStoreContext } from '../context';
 import React from 'react';
 import { signOut } from "firebase/auth";
-import { auth } from "../firebase";
+import { auth, firestore } from "../firebase";
+import { doc, setDoc } from "firebase/firestore";
 import './Header.css';
 import cartImage from "../assets/cart.png";
 import settingsImage from "../assets/settings.png";
@@ -20,6 +21,8 @@ function Header() {
   }
 
   async function logout() {
+    const docRef = doc(firestore, "users", user.uid);
+    await setDoc(docRef, { genres: genreList });
     await signOut(auth);
     setUser(null);
     navigate(`/`, { replace: true });

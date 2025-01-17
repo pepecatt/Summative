@@ -4,7 +4,7 @@
 	position: fixed;
 	top: 60px;
 	right: 0;
-	height: 93%;
+	height: 90%;
 	width: 300px;
 	background-color: rgba(72, 53, 53, 0.8);
 	color: white;
@@ -59,7 +59,7 @@
 	margin: 0;
 }
 
-.cart-item button {
+.trashCan {
 	background-color: #a48b8b;
 	color: white;
 	padding: 2px;
@@ -70,7 +70,7 @@
 	right: 27px;
 }
 
-.cart-item button:hover {
+.trashCan:hover {
     background-color: #8d7777;
 }
 
@@ -78,18 +78,20 @@
 	width: 30px;
 }
 
-/* Optional: Close button (for hiding the cart view) 
-  .cart-view .close-btn {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    background-color: transparent;
-    border: none;
-    font-size: 1.5em;
-    color: white;
-    cursor: pointer;
-  }
-  
-  .cart-view .close-btn:hover {
-    color: #ff4444; /* Change color on hover
-  } */
+.checkout {
+  background-color: #ff5454;
+  color: white; 
+  border: none;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+	position: relative;
+	width: 100%;
+}
+
+.checkout:hover {
+  background-color: #d44242; /* Darker pink on hover */
+}

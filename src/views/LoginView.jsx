@@ -43,11 +43,12 @@ function LoginView() {
 	async function readGenres(user) {
 		const docRef = doc(firestore, "users", user.uid);
   	const data = (await getDoc(docRef)).data();
-  	const genres = data.sortedGenres;
+  	const genres = data.genres;
 		console.log(genres);
 		setGenreList(genres);
 		navigate(`/movies/genre/${genres[0].id}`);
 		setCurrentGenre(genres[0].genre);
+		localStorage.setItem(`${user.uid}-genres`, JSON.stringify(genres));
 	}
 
 	return (

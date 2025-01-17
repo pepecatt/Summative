@@ -24,14 +24,16 @@ export const StoreProvider = ({ children }) => {
         if (sessionCart) {
           setCart(Map(JSON.parse(sessionCart)));
         }
-      } else {
-        //setUser(null);
+
+        const storedGenres = JSON.parse(localStorage.getItem(`${user?.uid}-genres`)) || [];
+        setGenreList(storedGenres);
       }
       setLoading(false);
     });
   }, [])
+
   useEffect(() => {
-    console.log("user context updated:", user); // Log user after every state change
+    console.log("user changed:", user);
   }, [user]);
 
   if (loading) {

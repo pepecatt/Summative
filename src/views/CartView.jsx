@@ -28,7 +28,9 @@ function CartView() {
 								);
 							})
 						}
+						<button className='checkout'>Checkout</button>
 					</div>
+					
 				</div>
 			)}
 		</>

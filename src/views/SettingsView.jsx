@@ -66,6 +66,7 @@ function SettingsView() {
         .sort((a, b) => a.genre.localeCompare(b.genre));
 
       setGenreList(sortedGenres);
+      localStorage.setItem(`${user.uid}-genres`, JSON.stringify(sortedGenres));
       setCurrentGenre(sortedGenres[0].genre);
     }
 
@@ -75,31 +76,19 @@ function SettingsView() {
   function setInformation() {
     if (newFirstName.current && newFirstName.current.value) {
       if (newLastName.current && newLastName.current.value) {
-          updateProfile(user, {
-              displayName: newFirstName.current.value + " " + newLastName.current.value
-          }).then(() => {
-              console.log("new first and last:", user.displayName);
-          }).catch(() => {
-              console.error("error setting display name");
-          });
+        updateProfile(user, {
+          displayName: newFirstName.current.value + " " + newLastName.current.value
+        });
       } else {
-          updateProfile(user, {
-              displayName: newFirstName.current.value + " " + user.displayName.split(' ')[1]
-          }).then(() => {
-              console.log("new first:", user.displayName);
-          }).catch(() => {
-              console.error("error setting display name");
-          });
+        updateProfile(user, {
+          displayName: newFirstName.current.value + " " + user.displayName.split(' ')[1]
+        });
       }
-  } else if (newLastName.current && newLastName.current.value) {
+    } else if (newLastName.current && newLastName.current.value) {
       updateProfile(user, {
-          displayName: user.displayName.split(' ')[0] + " " + newLastName.current.value
-      }).then(() => {
-          console.log("new last:", user.displayName);
-      }).catch(() => {
-          console.error("error setting display name");
+        displayName: user.displayName.split(' ')[0] + " " + newLastName.current.value
       });
-  }
+    }
   }
 
   const firstNameChange = () => setChangeFirst(!changeFirstName);

@@ -87,7 +87,7 @@ function RegisterView() {
     }
   }
 
-  async function sortGenres(selectedGenres, usera) {
+  async function sortGenres(selectedGenres, user) {
     const sortedGenres = selectedGenres
       .map((genreId) => genres.find((genre) => genre.id === genreId))
       .sort((a, b) => a.genre.localeCompare(b.genre)); // sort by genre name alphabetically
@@ -96,8 +96,10 @@ function RegisterView() {
     setCurrentGenre(sortedGenres[0].genre);
     navigateUser(sortedGenres);
 
-    const docRef = doc(firestore, "users", usera.uid);
-    await setDoc(docRef, { sortedGenres });
+    const docRef = doc(firestore, "users", user.uid);
+    await setDoc(docRef, { genres: sortedGenres });
+
+    localStorage.setItem(`${user.uid}-genres`, JSON.stringify(sortedGenres));
   }
 
   function navigateUser(sortedGenres) {

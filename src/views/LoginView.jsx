@@ -48,7 +48,7 @@ function LoginView() {
 		setGenreList(genres);
 		navigate(`/movies/genre/${genres[0].id}`);
 		setCurrentGenre(genres[0].genre);
-		localStorage.setItem(`${user.uid}-genres`, JSON.stringify(genres));
+		localStorage.setItem(`${user.uid}-genres`, JSON.stringify({genres: genres}));
 	}
 
 	return (

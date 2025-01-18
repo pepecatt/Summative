@@ -58,6 +58,7 @@ function GenresView() {
   function addToCart(movie) {
     const updatedCart = [...cart, { title: movie.title, poster: movie.poster_path }];
     setCart(updatedCart);
+    localStorage.setItem(`${user.uid}-cart`, JSON.stringify({cart: updatedCart}));
   }
 
   const isInCart = (movie) => {

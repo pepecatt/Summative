@@ -26,13 +26,16 @@ function Header() {
     await signOut(auth);
     setUser(null);
     navigate(`/`, { replace: true });
+    localStorage.clear();
   }
 
   async function cart() {
     if (cartOpen) {
       setCartOpen(false);
+      navigate(`/movies/genre/${genreList[0].id}`);
     } else {
       setCartOpen(true);
+      navigate(`/movies/cart`);
     }
   }
 

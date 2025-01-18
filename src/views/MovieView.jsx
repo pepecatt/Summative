@@ -7,7 +7,6 @@ function MovieView() {
   return (
     <>
       <Genre />
-      <CartView />
       <Header />
       <Outlet />
     </>

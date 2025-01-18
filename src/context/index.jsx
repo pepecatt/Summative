@@ -6,12 +6,10 @@ import { Map } from 'immutable';
 const StoreContext = createContext();
 
 export const StoreProvider = ({ children }) => {
-  // firebase user
   const [user, setUser] = useState(null);
-
   const [genreList, setGenreList] = useState(Map());
   const [currentGenre, setCurrentGenre] = useState("");
-  const [cart, setCart] = useState([]);
+  const [cart, setCart] = useState(Map());
   const [cartOpen, setCartOpen] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -20,13 +18,14 @@ export const StoreProvider = ({ children }) => {
     onAuthStateChanged(auth, user => {
       if (user) {
         setUser(user);
-        const sessionCart = localStorage.getItem(user.uid);
+        const sessionCart = JSON.parse(localStorage.getItem(`${user?.uid}-cart`)).cart || [];
         if (sessionCart) {
-          setCart(Map(JSON.parse(sessionCart)));
+          setCart(sessionCart);
         }
 
-        const storedGenres = JSON.parse(localStorage.getItem(`${user?.uid}-genres`)) || [];
+        const storedGenres = JSON.parse(localStorage.getItem(`${user?.uid}-genres`)).genres || [];
         setGenreList(storedGenres);
+        setCurrentGenre(storedGenres[0].genre);
       }
       setLoading(false);
     });

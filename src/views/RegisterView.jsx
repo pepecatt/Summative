@@ -99,7 +99,7 @@ function RegisterView() {
     const docRef = doc(firestore, "users", user.uid);
     await setDoc(docRef, { genres: sortedGenres });
 
-    localStorage.setItem(`${user.uid}-genres`, JSON.stringify(sortedGenres));
+    localStorage.setItem(`${user.uid}-genres`, JSON.stringify({genres: sortedGenres}));
   }
 
   function navigateUser(sortedGenres) {

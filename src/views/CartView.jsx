@@ -3,7 +3,7 @@ import trashCan from "../assets/trashcan.png";
 import "./Cartview.css";
 
 function CartView() {
-	const { cart, setCart, cartOpen } = useStoreContext();
+	const { cart, setCart } = useStoreContext();
 
 	function removeMovie(removedItem) {
 		setCart(cart.filter(item => item !== removedItem));
@@ -11,7 +11,6 @@ function CartView() {
 
 	return (
 		<>
-			{cartOpen && (
 				<div className="cart-view">
 					<h1>Shopping Cart</h1>
 					<div className="cart-items">
@@ -28,11 +27,15 @@ function CartView() {
 								);
 							})
 						}
-						<button className='checkout'>Checkout</button>
+            {cart.length >= 1 ? (
+              <button className='checkout'>Checkout</button>
+            ) : (
+              <p>Nothing in cart right now!</p>
+            )}
+						
 					</div>
 					
 				</div>
-			)}
 		</>
 	)
 }

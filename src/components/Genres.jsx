@@ -9,7 +9,7 @@ function Genres() {
 	function click(item) {
 		navigate(`genre/${item.id}`);
 		setCurrentGenre(item.genre);
-        setCartOpen(false);
+    setCartOpen(false);
 	}
 
 	return (

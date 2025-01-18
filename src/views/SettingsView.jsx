@@ -66,7 +66,7 @@ function SettingsView() {
         .sort((a, b) => a.genre.localeCompare(b.genre));
 
       setGenreList(sortedGenres);
-      localStorage.setItem(`${user.uid}-genres`, JSON.stringify(sortedGenres));
+      localStorage.setItem(`${user.uid}-genres`, JSON.stringify({genres: sortedGenres}));
       setCurrentGenre(sortedGenres[0].genre);
     }
 

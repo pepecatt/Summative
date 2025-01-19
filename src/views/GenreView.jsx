@@ -5,21 +5,24 @@ import { useStoreContext } from '../context';
 import "./GenreView.css";
 
 function GenresView() {
-  const { genreList, currentGenre,
-    setCartOpen, 
-    cart, setCart, user
+  const { user, genreList, purchases,
+    setCartOpen, cart, setCart
   } = useStoreContext();
   const [movies, setMovies] = useState([]);
   const { id } = useParams();
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const navigate = useNavigate();
   const firstName = user.displayName.split(' ')[0];
+  const navigate = useNavigate();
 
   if (!genreList || genreList.length < 1) {
     return <div>Loading...</div>;
   }
-  const [previousId, setPreviousId] = useState(genreList[0].id);
+
+  const currentGenre = genreList.find(genre => genre.id === parseInt(id))?.genre;
+
+  const firstGenre = genreList[0];
+  const [previousId, setPreviousId] = useState(firstGenre ? firstGenre.id : null);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -58,14 +61,10 @@ function GenresView() {
   function addToCart(movie) {
     const updatedCart = [...cart, { title: movie.title, poster: movie.poster_path }];
     setCart(updatedCart);
-    localStorage.setItem(`${user.uid}-cart`, JSON.stringify({cart: updatedCart}));
+    localStorage.setItem(user.uid, JSON.stringify(updatedCart));
+    console.log(purchases);
   }
 
-  const isInCart = (movie) => {
-    return cart.some(item => item.title === movie.title);
-  };
-
-  
   return (
     <div className="genreView-container">
       <h2 className="hello">Welcome, {firstName}!</h2>
@@ -80,11 +79,25 @@ function GenresView() {
               className="movie-poster"
             />
             <button
-              className={isInCart(movie) ? "added" : "buy"}
+              className={
+                purchases.some(item => item.title === movie.title)
+                  ? "bought"
+                  : cart.some(item => item.title === movie.title)
+                    ? "added"
+                    : "buy"
+              }
               onClick={() => addToCart(movie)}
-              disabled={isInCart(movie)}
+              disabled={
+                cart.some(item => item.title === movie.title)
+                || purchases.some(item => item.title === movie.title)
+              }
             >
-              {isInCart(movie) ? "Added" : "Buy"}
+              {purchases.some(item => item.title === movie.title)
+                ? "Bought"
+                : cart.some(item => item.title === movie.title)
+                  ? "Added"
+                  : "Add"
+              }
             </button>
           </div>
         ))}

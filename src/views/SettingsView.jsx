@@ -4,10 +4,7 @@ import { updateProfile } from 'firebase/auth';
 import "./SettingsView.css";
 
 function SettingsView() {
-  const {
-    user, setCurrentGenre,
-    genreList, setGenreList
-  } = useStoreContext();
+  const { user, genreList, setGenreList } = useStoreContext();
 
   const firstName = user.displayName.split(' ')[0];
   const [changeFirstName, setChangeFirst] = useState(false);
@@ -50,7 +47,7 @@ function SettingsView() {
 
   const checkboxesRef = useRef({});
 
-  function settings(e) {
+  async function settings(e) {
     e.preventDefault();
 
     const selectedGenres = Object.keys(checkboxesRef.current)
@@ -66,8 +63,8 @@ function SettingsView() {
         .sort((a, b) => a.genre.localeCompare(b.genre));
 
       setGenreList(sortedGenres);
-      localStorage.setItem(`${user.uid}-genres`, JSON.stringify({genres: sortedGenres}));
-      setCurrentGenre(sortedGenres[0].genre);
+      const docRef = doc(firestore, "users", user.uid);
+      await setDoc(docRef, { genres: genreList });
     }
 
     setInformation();

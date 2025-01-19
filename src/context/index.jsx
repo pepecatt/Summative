@@ -1,6 +1,7 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "../firebase";
+import { auth, firestore } from "../firebase";
+import { doc, getDoc } from "firebase/firestore";
 import { Map } from 'immutable';
 
 const StoreContext = createContext();
@@ -8,8 +9,8 @@ const StoreContext = createContext();
 export const StoreProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [genreList, setGenreList] = useState(Map());
-  const [currentGenre, setCurrentGenre] = useState("");
   const [cart, setCart] = useState(Map());
+  const [purchases, setPurchases] = useState(Map());
   const [cartOpen, setCartOpen] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -18,14 +19,34 @@ export const StoreProvider = ({ children }) => {
     onAuthStateChanged(auth, user => {
       if (user) {
         setUser(user);
-        const sessionCart = JSON.parse(localStorage.getItem(`${user?.uid}-cart`)).cart || [];
-        if (sessionCart) {
-          setCart(sessionCart);
+
+        try {
+          const cartData = localStorage.getItem(user.uid);
+          if (cartData) {
+            setCart(JSON.parse(cartData));
+            console.log("Parsed cart data:", JSON.parse(cartData)); // Debugging line
+          }
+        } catch {
+          cartObject = [];
+          setCart(new Map());
         }
 
-        const storedGenres = JSON.parse(localStorage.getItem(`${user?.uid}-genres`)).genres || [];
-        setGenreList(storedGenres);
-        setCurrentGenre(storedGenres[0].genre);
+        const getGenresandPurchases = async () => {
+          try {
+            const docRef = doc(firestore, "users", user.uid);
+            const data = (await getDoc(docRef)).data();
+            setGenreList(data.genres);
+            if (data.purchases) {
+              setPurchases(data.purchases);
+              console.log(data.purchases);
+            } else {
+              setPurchases(Map());
+            }
+          } catch (error) {
+            console.log(error);
+          }
+        };
+        getGenresandPurchases();
       }
       setLoading(false);
     });
@@ -43,8 +64,8 @@ export const StoreProvider = ({ children }) => {
     <StoreContext.Provider value={{
       user, setUser,
       genreList, setGenreList,
-      currentGenre, setCurrentGenre,
       cart, setCart,
+      purchases, setPurchases,
       cartOpen, setCartOpen,
       settingsOpen, setSettingsOpen,
       loading, setLoading

@@ -85,13 +85,18 @@ body {
   color: white;
 }
 
-.added {
-  background-color: gray;
-  color: white;
+.buy:hover {
+  background-color: rgb(183, 2, 2)
 }
 
-.addToCart:hover {
-  background-color: rgb(204, 2, 2)
+.added {
+  background-color: rgb(223, 187, 187);
+  color: black;
+}
+
+.bought {
+  background-color: gray;
+  color: white;
 }
 
 .pages {

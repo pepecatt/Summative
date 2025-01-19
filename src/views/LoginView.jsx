@@ -7,9 +7,7 @@ import { doc, getDoc } from "firebase/firestore";
 import './LoginView.css';
 
 function LoginView() {
-	const { setUser, 
-		setGenreList, setCurrentGenre, 
-		 user } 
+	const { setUser, setGenreList, user } 
 		= useStoreContext();
 	const enteredEmail = useRef('');
 	const enteredPassword = useRef('');
@@ -44,11 +42,8 @@ function LoginView() {
 		const docRef = doc(firestore, "users", user.uid);
   	const data = (await getDoc(docRef)).data();
   	const genres = data.genres;
-		console.log(genres);
 		setGenreList(genres);
 		navigate(`/movies/genre/${genres[0].id}`);
-		setCurrentGenre(genres[0].genre);
-		localStorage.setItem(`${user.uid}-genres`, JSON.stringify({genres: genres}));
 	}
 
 	return (

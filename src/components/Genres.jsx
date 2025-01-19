@@ -3,12 +3,11 @@ import { useStoreContext } from '../context';
 import "./Genres.css";
 
 function Genres() {
-	const { genreList, setCurrentGenre, setCartOpen } = useStoreContext();
+	const { genreList, setCartOpen } = useStoreContext();
 	const navigate = useNavigate();
 
 	function click(item) {
 		navigate(`genre/${item.id}`);
-		setCurrentGenre(item.genre);
     setCartOpen(false);
 	}
 

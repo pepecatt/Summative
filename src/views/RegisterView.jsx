@@ -7,8 +7,7 @@ import { doc, setDoc } from "firebase/firestore";
 import "./RegisterView.css";
 
 function RegisterView() {
-  const { setUser,
-    setGenreList, setCurrentGenre } = useStoreContext();
+  const { setUser, setGenreList } = useStoreContext();
 
   const firstName = useRef('');
   const lastName = useRef('');
@@ -93,13 +92,10 @@ function RegisterView() {
       .sort((a, b) => a.genre.localeCompare(b.genre)); // sort by genre name alphabetically
 
     setGenreList([...sortedGenres]);
-    setCurrentGenre(sortedGenres[0].genre);
     navigateUser(sortedGenres);
 
     const docRef = doc(firestore, "users", user.uid);
     await setDoc(docRef, { genres: sortedGenres });
-
-    localStorage.setItem(`${user.uid}-genres`, JSON.stringify({genres: sortedGenres}));
   }
 
   function navigateUser(sortedGenres) {
